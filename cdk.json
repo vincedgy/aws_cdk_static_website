@@ -1,0 +1,12 @@
+{
+  "app": "python3 app.py",
+  "context": {
+    "namespace": "static-site",
+    "domain_name": "vincedgy.com",
+    "sub_domain_name": "www",
+    "enable_s3_website_endpoint": false,
+    "origin_custom_header_parameter_name": "/prod/static-site/origin-custom-header/referer",
+    "hosted_zone_id": "Z06792503VLKSRQA6TA80",
+    "hosted_zone_name": "vincedgy.com"
+  }
+}
