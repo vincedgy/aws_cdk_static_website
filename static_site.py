@@ -71,7 +71,7 @@ class StaticSite(Construct):
 
         # Deploy files in S3 bucket
         self.deployment = s3deploy.BucketDeployment(self, "DeployedWebsite",
-                                                    sources=[s3deploy.Source.asset("./website")],
+                                                    sources=[s3deploy.Source.asset("./website/build")],
                                                     destination_bucket=self.bucket,
                                                     distribution=self.distribution,
                                                     distribution_paths= ["/*"],
