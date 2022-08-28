@@ -31,7 +31,10 @@ class StaticSitePipelineStack(Stack):
                     # Instructs Codebuild to install required packages
                     # "pip install --upgrade pip",
                     "pip install -r requirements.txt",
-                    "cd website && npm install && npm run build",
+                    "cd website",
+                    "npm install",
+                    "npm run build",
+                    "cd ..",
                     "cdk synth",
                 ]
             ),
