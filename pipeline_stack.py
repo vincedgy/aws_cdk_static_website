@@ -1,7 +1,7 @@
 from aws_cdk import (
     aws_codecommit as codecommit,
     pipelines as pipelines,
-    Stack,
+    Stack, RemovalPolicy,
 )
 from constructs import Construct
 
@@ -18,12 +18,13 @@ class StaticSitePipelineStack(Stack):
             self, 'CdkStaticWebsiteRepo',
             repository_name="CdkStaticWebsiteRepo"
         )
+        repo.applyRemovalPolicy(RemovalPolicy.RETAIN);
 
         # Pipeline code will go here
         pipeline = pipelines.CodePipeline(
             self,
             "Pipeline",
-            synth=pipelines.ShellStep(
+            synth=pipelines.CodeBuildStep(
                 "Synth",
                 input=pipelines.CodePipelineSource.code_commit(repo, "main"),
                 install_commands=[
@@ -31,10 +32,10 @@ class StaticSitePipelineStack(Stack):
                     # Instructs Codebuild to install required packages
                     # "pip install --upgrade pip",
                     "pip install -r requirements.txt",
-                    "cd ./website && npm ci && npm run build && cd ..",
+                    "cd ./website && npm ci && npm run build"
                 ],
                 commands=[
-                    "cdk synth -a 'python3 app.py' StaticSitePipelineStack",
+                    "cdk synth"
                 ]
             ),
         )
