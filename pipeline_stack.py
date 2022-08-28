@@ -31,17 +31,15 @@ class StaticSitePipelineStack(Stack):
                     # Instructs Codebuild to install required packages
                     # "pip install --upgrade pip",
                     "pip install -r requirements.txt",
+                    "cd ./website && npm ci && npm run build && cd ..",
                 ],
                 commands=[
-                    "export STARTING_DIR=$(pwd) && echo $STARTING_DIR"
-                    "cd ./website && npm ci && npm run build",
-                    "cd $STARTING_DIR",
-                    "cdk synth --ci",
+                    "cdk synth -a 'python3 app.py' StaticSitePipelineStack",
                 ]
             ),
         )
 
-        deploy = StaticSitePipelineStage(self, id="Deploy-StaticWebSite", props=props)
+        deploy = StaticSitePipelineStage(self, id="DeployStaticWebSite", props=props)
         deploy_stage = pipeline.add_stage(deploy)
 
         # deploy_stage.add_post(

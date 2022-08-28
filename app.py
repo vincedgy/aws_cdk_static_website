@@ -22,16 +22,9 @@ props = {
     "hosted_zone_name": app.node.try_get_context("hosted_zone_name"),
 }
 
-# static_site_stack = StaticSiteStack(
-#     scope=app,
-#     construct_id=f"{props['namespace']}-stack",
-#     props=props,
-#     description="Static Site using S3, CloudFront and Route53",
-# )
-
-static_site_pipeline_stack = StaticSitePipelineStack(app,
-                                                     f"{props['namespace']}-pipeline-stack",
-                                                     props
-                                                     )
+StaticSitePipelineStack(app,
+                        f"{props['namespace']}-pipeline-stack",
+                        props
+                        )
 
 app.synth()
