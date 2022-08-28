@@ -33,10 +33,10 @@ class StaticSitePipelineStack(Stack):
                     "pip install -r requirements.txt",
                 ],
                 commands=[
-                    "export STARTING_DIR=$(pwd)"
+                    "export STARTING_DIR=$(pwd) && echo $STARTING_DIR"
                     "cd ./website && npm ci && npm run build",
                     "cd $STARTING_DIR",
-                    "cdk synth --ci --app cdk.out StaticSitePipelineStack --ci",
+                    "cdk synth --ci",
                 ]
             ),
         )
