@@ -32,7 +32,6 @@ class StaticSitePipelineStack(Stack):
                     # Instructs Codebuild to install required packages
                     # "pip install --upgrade pip",
                     "pip install -r requirements.txt",
-                    "cd ./website && npm ci && npm run build"
                 ],
                 commands=[
                     "cdk synth"
@@ -43,12 +42,17 @@ class StaticSitePipelineStack(Stack):
         deploy = StaticSitePipelineStage(self, id="DeployStaticWebSite", props=props)
         deploy_stage = pipeline.add_stage(deploy)
 
-        # deploy_stage.add_post(
-        #     pipelines.ShellStep(
-        #         "TestViewerEndpoint",
-        #         env={
-        #             "ENDPOINT_URL": deploy.distribution_domain_name
-        #         },
-        #         commands=["curl -Ssf $ENDPOINT_URL"],
-        #     )
-        # )
+        deploy_stage.add_pre(
+            pipelines.ShellStep("Compile Website"),
+            commands=["cd ./website && npm ci && npm run build"]
+        )
+
+        deploy_stage.add_post(
+             pipelines.ShellStep(
+                 "TestViewerEndpoint",
+                 env={
+                     "ENDPOINT_URL": deploy.distribution_domain_name
+                 },
+                 commands=["curl -Ssf $ENDPOINT_URL"],
+             )
+         )
