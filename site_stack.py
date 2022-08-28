@@ -1,10 +1,33 @@
-from aws_cdk import CfnOutput, Stack, aws_s3_deployment as s3deploy
+from aws_cdk import CfnOutput, Stack
+from constructs import Construct
+
 from static_site import StaticSitePublicS3, StaticSitePrivateS3
 
 
 class StaticSiteStack(Stack):
-    def __init__(self, scope, construct_id, props, **kwargs):
-        super().__init__(scope, construct_id, **kwargs)
+    @property
+    def distribution_domain_name(self):
+        return self._distribution_domain_name
+
+    @property
+    def distribution_id(self):
+        return self._distribution_id
+
+    @property
+    def certificate(self):
+        return self._certificate
+
+    @property
+    def bucket_name(self):
+        return self._bucket_name
+
+    def __init__(self, scope: Construct, id: str, props: dict, **kwargs):
+        super().__init__(scope, id, **kwargs)
+
+        self._distribution_domain_name = None
+        self._distribution_id = None
+        self._certificate = None
+        self._bucket_name = None
 
         site_domain_name = props["domain_name"]
         if props["sub_domain_name"]:
@@ -37,22 +60,30 @@ class StaticSiteStack(Stack):
                 hosted_zone_name=props["hosted_zone_name"],
             )
 
+        self._bucket_name = site.bucket.bucket_name
+        self._distribution_id = site.distribution.distribution_id
+        self._distribution_domain_name = site.distribution.distribution_domain_name
+        self._certificate = site.certificate.certificate_arn
+
         # Add stack outputs
         CfnOutput(
             self,
-            "SiteBucketName",
-            value=site.bucket.bucket_name,
+            "StaticSiteAddress",
+            value=f"https://{site.bucket.bucket_name}"
         )
+
         CfnOutput(
             self,
             "DistributionId",
             value=site.distribution.distribution_id,
         )
+
         CfnOutput(
             self,
             "DistributionDomainName",
-            value=site.distribution.distribution_domain_name,
+            value=f"https://{site.distribution.distribution_domain_name}",
         )
+
         CfnOutput(
             self,
             "CertificateArn",

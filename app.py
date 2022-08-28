@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-import os
-from aws_cdk import App, Environment
-from site_stack import StaticSiteStack
+from aws_cdk import App
 
+from pipeline_stack import StaticSitePipelineStack
 
 app = App()
 props = {
@@ -23,22 +22,16 @@ props = {
     "hosted_zone_name": app.node.try_get_context("hosted_zone_name"),
 }
 
-env = Environment(
-    account=os.environ.get(
-        "CDK_DEPLOY_ACCOUNT", os.environ.get("CDK_DEFAULT_ACCOUNT")
-    ),
-    region=os.environ.get(
-        "CDK_DEPLOY_REGION", os.environ.get("CDK_DEFAULT_REGION")
-    ),
-)
+# static_site_stack = StaticSiteStack(
+#     scope=app,
+#     construct_id=f"{props['namespace']}-stack",
+#     props=props,
+#     description="Static Site using S3, CloudFront and Route53",
+# )
 
-StaticSite = StaticSiteStack(
-    scope=app,
-    construct_id=f"{props['namespace']}-stack",
-    props=props,
-    env=env,
-    description="Static Site using S3, CloudFront and Route53",
-)
-
+static_site_pipeline_stack = StaticSitePipelineStack(app,
+                                                     f"{props['namespace']}-pipeline-stack",
+                                                     props
+                                                     )
 
 app.synth()
