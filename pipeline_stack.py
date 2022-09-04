@@ -28,11 +28,11 @@ class StaticSitePipelineStack(Stack):
                 "Synth",
                 input=pipelines.CodePipelineSource.code_commit(repo, "main"),
                 commands=[
+                    "cd website && npm ci && npm run build website && cd ..",
                     "npm install -g aws-cdk",  # Installs the cdk cli on Codebuild
                     # Instructs Codebuild to install required packages
                     # "pip install --upgrade pip",
                     "pip install -r requirements.txt",
-                    "cd website && npm ci && npm run build website && cd ..",
                     "cdk synth"
                 ]
             ),
