@@ -25,10 +25,10 @@ class StaticSitePipelineStack(Stack):
             self,
             "CdkStaticWebsitePipeline",
             synth=pipelines.CodeBuildStep(
-                "Synth",
+                "Build Website and Synth",
                 input=pipelines.CodePipelineSource.code_commit(repo, "main"),
                 install_commands=[
-                    "cd website && npm ci && npm run build website && cd ..",
+                    "cd website && npm ci && npm run build --prod",
                 ],
                 commands=[
                     "npm install -g aws-cdk",
