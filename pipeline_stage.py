@@ -25,7 +25,8 @@ class StaticSitePipelineStage(Stage):
         return self._bucket_name
 
     def __init__(self, scope: Construct, id: str, props: dict, **kwargs):
-        super().__init__(scope, id, **kwargs)
+
+        _this = super().__init__(scope, id, **kwargs)
 
         service = StaticSiteStack(self,
                                   "StaticWebsite",
