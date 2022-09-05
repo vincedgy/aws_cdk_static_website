@@ -23,7 +23,7 @@ props = {
 }
 
 StaticSitePipelineStack(app,
-                        f"{props['namespace']}-pipeline-stack",
+                        f"ph-{props['namespace']}-pipeline-stack",
                         props
                         )
 
