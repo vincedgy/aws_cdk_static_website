@@ -13,12 +13,8 @@ class StaticSitePipelineStack(Stack):
     def __init__(self, scope: Construct, id: str, props: dict, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        # Creates a CodeCommit repository called 'CdkStaticWebsiteRepo'
-        repo = codecommit.Repository(
-            self, 'CdkStaticWebsiteRepo',
-            repository_name="CdkStaticWebsiteRepo"
-        )
-        repo.apply_removal_policy(RemovalPolicy.RETAIN);
+        # Get the repository
+        repo = codecommit.Repository.from_repository_name(self, id=id, repository_name='CdkStaticWebsiteRepo')
 
         # Pipeline code will go here
         pipeline = pipelines.CodePipeline(

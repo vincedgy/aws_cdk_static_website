@@ -22,18 +22,19 @@ from aws_cdk import (
 )
 from constructs import Construct
 
+
 class StaticSite(Construct):
     """The base class for StaticSite constructs"""
 
     def __init__(
-        self,
-        scope,
-        construct_id,
-        site_domain_name,
-        hosted_zone_id,
-        hosted_zone_name,
-        domain_certificate_arn=None,
-        **kwargs,
+            self,
+            scope,
+            construct_id,
+            site_domain_name,
+            hosted_zone_id,
+            hosted_zone_name,
+            domain_certificate_arn=None,
+            **kwargs,
     ):
         super().__init__(scope, construct_id, **kwargs)
 
@@ -74,7 +75,7 @@ class StaticSite(Construct):
                                                     sources=[s3deploy.Source.asset("./website/build")],
                                                     destination_bucket=self.bucket,
                                                     distribution=self.distribution,
-                                                    distribution_paths= ["/*"],
+                                                    distribution_paths=["/*"],
                                                     )
 
         # Create a Route53 record
@@ -128,10 +129,10 @@ class StaticSite(Construct):
 
 class StaticSitePrivateS3(StaticSite):
     def __init__(
-        self,
-        scope,
-        construct_id,
-        **kwargs,
+            self,
+            scope,
+            construct_id,
+            **kwargs,
     ):
         super().__init__(scope, construct_id, **kwargs)
 
@@ -167,11 +168,11 @@ class StaticSitePrivateS3(StaticSite):
 
 class StaticSitePublicS3(StaticSite):
     def __init__(
-        self,
-        scope,
-        construct_id,
-        origin_referer_header_parameter_name,
-        **kwargs,
+            self,
+            scope,
+            construct_id,
+            origin_referer_header_parameter_name,
+            **kwargs,
     ):
         super().__init__(scope, construct_id, **kwargs)
 
@@ -222,11 +223,11 @@ class StaticSitePublicS3(StaticSite):
         self.distribution = cloudfront.CloudFrontWebDistribution(
             self,
             "cloudfront_distribution",
-            viewer_certificate = cloudfront.ViewerCertificate.from_acm_certificate(self.certificate,
-                aliases=[self._site_domain_name],
-                security_policy=cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
-                ssl_method=cloudfront.SSLMethod.SNI
-            ),
+            viewer_certificate=cloudfront.ViewerCertificate.from_acm_certificate(self.certificate,
+                                                                                 aliases=[self._site_domain_name],
+                                                                                 security_policy=cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
+                                                                                 ssl_method=cloudfront.SSLMethod.SNI
+                                                                                 ),
             origin_configs=[
                 cloudfront.SourceConfiguration(
                     custom_origin_source=origin_source,

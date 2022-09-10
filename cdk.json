@@ -18,28 +18,9 @@
     "namespace": "static-site",
     "domain_name": "dev.phoenix-mp.fr",
     "sub_domain_name": "www",
-    "enable_s3_website_endpoint": false,
+    "enable_s3_website_endpoint": true,
     "origin_custom_header_parameter_name": "/prod/static-site/origin-custom-header/referer",
     "hosted_zone_id": "Z00935391M1NISCE9U7MJ",
-    "hosted_zone_name": "dev.phoenix-mp.fr",
-    "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,
-    "@aws-cdk/core:stackRelativeExports": true,
-    "@aws-cdk/aws-rds:lowercaseDbIdentifier": true,
-    "@aws-cdk/aws-lambda:recognizeVersionProps": true,
-    "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
-    "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": true,
-    "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": true,
-    "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": true,
-    "@aws-cdk/core:checkSecretUsage": true,
-    "@aws-cdk/aws-iam:minimizePolicies": true,
-    "@aws-cdk/aws-ecs:arnFormatIncludesClusterName": true,
-    "@aws-cdk/core:validateSnapshotRemovalPolicy": true,
-    "@aws-cdk/aws-codepipeline:crossAccountKeyAliasStackSafeResourceName": true,
-    "@aws-cdk/aws-s3:createDefaultLoggingPolicy": true,
-    "@aws-cdk/aws-sns-subscriptions:restrictSqsDescryption": true,
-    "@aws-cdk/core:target-partitions": [
-      "aws",
-      "aws-cn"
-    ]
+    "hosted_zone_name": "dev.phoenix-mp.fr"
   }
 }

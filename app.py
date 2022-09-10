@@ -3,6 +3,7 @@
 from aws_cdk import App
 
 from pipeline_stack import StaticSitePipelineStack
+from repository_stack import StaticSiteRepositoryStack
 
 app = App()
 props = {
@@ -21,6 +22,13 @@ props = {
     "hosted_zone_id": app.node.try_get_context("hosted_zone_id"),
     "hosted_zone_name": app.node.try_get_context("hosted_zone_name"),
 }
+
+
+try:
+    StaticSiteRepositoryStack(app, f"ph-{props['namespace']}-repository-stack")
+except Exception as e:
+    print(e)
+
 
 StaticSitePipelineStack(app,
                         f"ph-{props['namespace']}-pipeline-stack",
