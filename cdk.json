@@ -16,11 +16,11 @@
   },
   "context": {
     "namespace": "static-site",
-    "domain_name": "dev.phoenix-mp.fr",
+    "domain_name": "www.cloudandtech-consulting.com",
     "sub_domain_name": "www",
     "enable_s3_website_endpoint": true,
     "origin_custom_header_parameter_name": "/prod/static-site/origin-custom-header/referer",
-    "hosted_zone_id": "Z00935391M1NISCE9U7MJ",
-    "hosted_zone_name": "dev.phoenix-mp.fr"
+    "hosted_zone_id": "Z0355697220HPMTTYZVOA",
+    "hosted_zone_name": "cloudandtech-consulting.com"
   }
 }

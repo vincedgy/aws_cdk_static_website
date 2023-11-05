@@ -25,13 +25,13 @@ props = {
 
 
 try:
-    StaticSiteRepositoryStack(app, f"ph-{props['namespace']}-repository-stack")
+    StaticSiteRepositoryStack(app, f"{props['namespace']}-repository-stack")
 except Exception as e:
     print(e)
 
 
 StaticSitePipelineStack(app,
-                        f"ph-{props['namespace']}-pipeline-stack",
+                        f"{props['namespace']}-pipeline-stack",
                         props
                         )
 

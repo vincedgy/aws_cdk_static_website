@@ -5,7 +5,6 @@ from constructs import Construct
 
 from site_stack import StaticSiteStack
 
-
 class StaticSitePipelineStage(Stage):
 
     @property
